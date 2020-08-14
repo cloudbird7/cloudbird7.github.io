@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://cloudbird7.github.io</id>
+    <title>CloudBird&apos;s Idea Space</title>
+    <updated>2020-08-14T13:25:24.897Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://cloudbird7.github.io"/>
+    <link rel="self" href="https://cloudbird7.github.io/atom.xml"/>
+    <subtitle>CloudBird&apos;s personal blog
+CloudBird 的个人博客</subtitle>
+    <logo>https://cloudbird7.github.io/images/avatar.png</logo>
+    <icon>https://cloudbird7.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, CloudBird&apos;s Idea Space</rights>
+</feed>
