@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>2.2 SIMPLE系列算法 | 2.3 PISO算法 | CloudBird&#39;s Idea Space</title>
-<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597478147021">
+<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597483492278">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cloudbird7.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="2.2 SIMPLE系列算法 | 2.3 PISO算法 | CloudBird&#39;s Idea Space - Atom Feed" href="https://cloudbird7.github.io/atom.xml">
@@ -23,7 +23,7 @@ SIMPLE算法(Semi-Implicit Method for PressureLinked Equations)[1]最初被设�
       <div class="main-content">
         <div class="site-header">
   <a href="https://cloudbird7.github.io">
-  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597478147021" alt="">
+  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597483492278" alt="">
   </a>
   <h1 class="site-title">
     CloudBird&#39;s Idea Space
@@ -241,7 +241,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 <p>SIMPLE算法的流程图如下：</p>
 <ul>
 <li><strong>图2.1 稳态SIMPLE算法框图</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200731214237495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图2.1 稳态SIMPLE算法框图" loading="lazy"></li>
+<img src="https://img-blog.csdnimg.cn/20200731214237495.png" alt="图2.1 稳态SIMPLE算法框图" loading="lazy"></li>
 </ul>
 <h4 id="222-simple算法的亚松弛">2.2.2 SIMPLE算法的亚松弛</h4>
 <p>在上一节中，我们指出SIMPLE算法唯一的简化假设是将式(2.4)简化为了式(2.15)，在这一节我们详细分析一下这一简化背后的逻辑。<br>
@@ -738,7 +738,7 @@ H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
 c-16-25.333-24-45-24-59z'/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span></span></span>后带入压力泊松方程(2.14)求出压力，再根据压力和式(2.15)求解出新的速度。若按SIMPLE系列算法，此时应该将新的压力带回动量预测方程进行下一次迭代，但PISO算法并不这样做，PISO算法在求解完一次新的压力和速度后选择将求解得到的新速度带回压力泊松方程再次求解，然后再次求得一个新的压力，继而再次更新速度，压力泊松方程(2.14)与速度更新方程(2.15)之间的这种循环成为压力修正。PISO算法的框图如下：</p>
 <ul>
 <li><strong>图2.2 PISO算法框图</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200731214329701.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图2.2 PISO算法框图" loading="lazy"></li>
+<img src="https://img-blog.csdnimg.cn/20200731214329701.png" alt="图2.2 PISO算法框图" loading="lazy"></li>
 </ul>
 <p>需要指出的是，PISO算法也有用于稳态计算的版本，但鉴于PISO算法在OpenFOAM中仅用作瞬态计算，在此不予赘述，感兴趣的读者可以参考相关文献<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>。</p>
 <h4 id="232-openfoam中的piso算法">2.3.2 OpenFOAM中的PISO算法</h4>

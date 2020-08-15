@@ -1,0 +1,410 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>简单自编程实现手动划分OpenFOAM并行分区（以manual方式进行划分） | CloudBird&#39;s Idea Space</title>
+<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597483492278">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cloudbird7.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="简单自编程实现手动划分OpenFOAM并行分区（以manual方式进行划分） | CloudBird&#39;s Idea Space - Atom Feed" href="https://cloudbird7.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="最近在进行计算的时候，为了提高并行效率，我决定手动进行OpenFOAM并行网格的划分。一般来说，提高并行效率可以从两个方面着手：
+
+使每个CPU负担的网格数量尽可能相等，避免出现限制计算的短板。
+使每个CPU负担的网格之间的公用面尽可能少，..." />
+    <meta name="keywords" content="OpenFoam编程笔记,中文博文" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://cloudbird7.github.io">
+  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597483492278" alt="">
+  </a>
+  <h1 class="site-title">
+    CloudBird&#39;s Idea Space
+  </h1>
+  <p class="site-description">
+    CloudBird 的驿站  |  CloudBird's blog
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页 HOME
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          文章 Articles
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          分类 Tags
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于 About
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/cloudbird7" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              简单自编程实现手动划分OpenFOAM并行分区（以manual方式进行划分）
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-05-26
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://cloudbird7.github.io/tag/codeNote_chinese/" class="post-tag">
+                  # OpenFoam编程笔记
+                </a>
+              
+                <a href="https://cloudbird7.github.io/tag/chineseBlog/" class="post-tag">
+                  # 中文博文
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://img-blog.csdnimg.cn/2020040620095596.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>最近在进行计算的时候，为了提高并行效率，我决定手动进行OpenFOAM并行网格的划分。一般来说，提高并行效率可以从两个方面着手：</p>
+<ul>
+<li>使每个CPU负担的网格数量尽可能相等，避免出现限制计算的短板。</li>
+<li>使每个CPU负担的网格之间的公用面尽可能少，减少CPU之间的信息交互。</li>
+</ul>
+<p>一般来说，如果网格比较简单，可以轻易使用simple方法划分，如果网格比较复杂，可以用scotch方法划分（关于各划分方法可以查看<a href="https://mp.weixin.qq.com/s/n2cF7FMlAzuRG73bqN45Ig?">这篇文章</a>）。但是对于一个几何结构比较简单但是网格分布不均匀的网格，使用simple和scotch都不太好获得比较好的划分结果，因此我决定自己进行手动划分。<br>
+网上关于手动划分并行区域的教程有很多，主要可以参考：<br>
+<a href="http://www.cfd-china.com/topic/2486/decomposepar-%E7%9A%84%E6%89%8B%E5%8A%A8%E5%88%86%E5%9D%97-%E6%89%8B%E5%8A%A8%E6%8C%87%E5%AE%9A%E8%AE%A1%E7%AE%97%E5%8C%BA%E5%9F%9F%E5%88%86%E5%9D%97">CFD中国帖子1</a><br>
+<a href="http://www.cfd-china.com/topic/231/openfoam%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E5%88%92%E5%88%86%E5%8C%BA%E5%9F%9F/2">CFD中国帖子2</a><br>
+<a href="http://xiaopingqiu.github.io/2016/08/21/ManualDecomposition/">xiaopingqiu的博客文章</a><br>
+<a href="https://www.cfd-online.com/Forums/openfoam-pre-processing/126571-manual-decomposition-method.html">CFDonline帖子</a><br>
+通过阅读以上资料我们可以获得手动分区的一般步骤，但这些资料在一些关键步骤上却说的不是很明白，按照这些教程在OF7环境下无法实现较大网格量的手动分解。经过一段时间的摸索，我找到一种行之有效的实现方法：</p>
+<h3 id="1-手动划分基本原理">1. 手动划分基本原理</h3>
+<p>为了实现手动并行区域的划分，我们首先需要在/system/decomposeParDict中将划分方式修改为<code>manual</code>，之后需要在<code>manualCoeffs</code>中指定划分区域的数据文件。关于该数据文件，我们可以在OpenFOAM主文件夹中搜寻“manualDecomposition”，得到一个范例文件：</p>
+<pre><code class="language-cpp">/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       labelList;
+    location    &quot;constant&quot;;
+    object      cellDecomposition;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+400
+(
+0
+0
+...
+...
+0
+0
+)
+
+
+// ************************************************************************* //
+</code></pre>
+<p>这是一个labelList类型的文件，可以看到其中最主要的信息是中间按照网格ID排列的一些列labe值，0就代表我们将其划分到processor0号CPU中，以此类推。我们要做的最主要工作就是生成一个这样的文件。</p>
+<h3 id="2使用setfield进行区域划分">2.使用setField进行区域划分</h3>
+<p>首先，我们先在decomposeParDict中将划分方式设置为simple，simple的具体划分方式没有影响。之后在算例主目录打开终端并执行<code>decomposePar -cellDist</code>。该命令执行后会在划分网格的同时在0文件夹中生成一个cellDist标量场。我们把划分得到的没有用的processor0-n的文件夹全部删除，我们主要利用的就是cellDict这个场。通过paraview我们可以发现，cellDist场是将并行划分的结果用一个标量场表达出来，属于0号CPU的网格区域对应的标量值就是0，属于1号CPU的网格区域对应的标量值就是1......以此类推。如果不想使用cellDist场，自己复制一个空白的标量场文件也可以。<br>
+接下来我们使用setFields工具对标量场进行赋值，赋值的原则是将想要划分到0号CPU的网格的标量值设置为0，以此类推。下面我们给出一个例子，大家可以使用setField的丰富功能实现复杂区域的划分：</p>
+<pre><code class="language-cpp">/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.5                                   |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue cellDist 0
+    //volScalarFieldValue rhoe 1e-11
+);
+
+regions
+(
+   boxToCell   
+    {
+       box (0 0 0)(0.00072 0.003 0.001);
+
+        fieldValues
+        (
+            volScalarFieldValue cellDist 0
+        );
+    }
+   boxToCell   
+    {
+       box (0.00072 0 0)(0.00144 0.003 0.001);
+
+        fieldValues
+        (
+            volScalarFieldValue cellDist 1
+        );
+    }
+...
+...
+);
+
+// ************************************************************************* //
+</code></pre>
+<p>执行setFields命令即可对场进行划分，划分后我们可以使用paraview查看一下重新设置的场cellDist场，看看划分结果是否符合我们的预期。<br>
+<img src="https://img-blog.csdnimg.cn/2020040620095596.png" alt="生成的cellDist场" loading="lazy"><em>生成的cellDist场</em></p>
+<h3 id="3自编程实现文件格式转换">3.自编程实现文件格式转换</h3>
+<p>用记事本打开上面得到的cellDist场，我们可以发下如下的文件结构：</p>
+<pre><code class="language-cpp">/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       volScalarField;
+    location    &quot;0&quot;;
+    object      cellDist;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   nonuniform List&lt;scalar&gt; 
+120000 //网格数目
+(...... //标量场信息)；
+boundaryField
+{......}
+</code></pre>
+<p>可以发现，标量场的文件格式与手动划分需要的labelList类型文件有一些区别。需要注意的是，即使我们将cellDist标量场的开头替换为标准的labelList开头，删除文件尾的边界条件信息，也无法让decomposePar工具识别。这个原因在于标量场每一个网格存储的值使用特殊的分隔符进行分隔，而labelList的值是按照回车符进行分隔的。这一特点可以使用记事本打开一个标量场文件和一个labelList文件对比一下直观获得。<br>
+开头提到的所有文章都没有给出一种优雅的方式进行文件格式的转换，在这里，我们使用OpenFOAM编程的方式进行文件转换。新建一个空白的C++文件，输入以下代码：</p>
+<pre><code class="language-cpp">/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     |
+    \\  /    A nd           | Copyright (C) 2011-2013 OpenFOAM Foundation
+     \\/     M anipulation  |
+-------------------------------------------------------------------------------
+License
+    This file is part of OpenFOAM.
+
+    OpenFOAM is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with OpenFOAM.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+
+Application
+    scalar2Label
+    codeBy CloudBird, HIT,cloudbird7@foxmail.com
+
+\*---------------------------------------------------------------------------*/
+
+#include &quot;fvCFD.H&quot;
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+int main(int argc, char *argv[])
+{
+    #include &quot;setRootCase.H&quot;
+    #include &quot;createTime.H&quot;
+    #include &quot;createMesh.H&quot;
+
+    Info&lt;&lt; &quot;Reading scalarField\n&quot; &lt;&lt; endl;
+    volScalarField manualField
+    (
+        IOobject
+        (
+            &quot;cellDist&quot;,
+            runTime.timeName(),
+            mesh,
+            IOobject::MUST_READ,
+            IOobject::AUTO_WRITE
+        ),
+        mesh
+    );
+
+    const volVectorField&amp; center = mesh.C();
+
+    labelIOList finalDecomp
+    (
+        IOobject
+        (
+            &quot;manualDecomposition&quot;,
+            mesh.facesInstance(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::AUTO_WRITE,
+            false
+        ),
+        labelList (center.size())
+    );
+
+    Info&lt;&lt; &quot;Making manualDecomposition file\n&quot; &lt;&lt; endl;
+    forAll(center, cellID)
+    {
+	finalDecomp[cellID] = manualField[cellID];
+    }
+
+    finalDecomp.write();
+
+    Info&lt;&lt; &quot;Done\n&quot; &lt;&lt; endl;
+
+    return 0;
+}
+
+
+// ************************************************************************* //
+</code></pre>
+<p>将以上文件保存为“scalar2Label.C”，使用wmake进行编译即可。大家也可以直接下载我写好的代码，链接在我的CSDN下载页和本博文对应的资源中。<br>
+编译完成后在算例目录下执行<code>scalar2Label</code>即可将cellDist文件转化为一个manualDecomposition文件，存储在constant文件夹下。之后仅需要在decomposeParDict指定手动分区的文件为manualDecomposition然后执行<code>decomposePar</code>即可完成手动并行分区的划分。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-%E6%89%8B%E5%8A%A8%E5%88%92%E5%88%86%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86">1. 手动划分基本原理</a></li>
+<li><a href="#2%E4%BD%BF%E7%94%A8setfield%E8%BF%9B%E8%A1%8C%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86">2.使用setField进行区域划分</a></li>
+<li><a href="#3%E8%87%AA%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2">3.自编程实现文件格式转换</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://cloudbird7.github.io/post/gforce_chinese/">
+              <h3 class="post-title">
+                OpenFOAM中重力的植入方式
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  CloudBird</a> |邮件地址:cloudbird7@foxmail.com|CSDN同步博客:<a href="https://blog.csdn.net/CloudBird07" target="_blank">CloudBird07</a>
+  <a class="rss" href="https://cloudbird7.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

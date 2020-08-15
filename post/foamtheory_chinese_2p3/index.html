@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>2.4 PIMPLE算法 | 2.5 附加显式力的压力速度耦合 | CloudBird&#39;s Idea Space</title>
-<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597478147021">
+<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597483492278">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cloudbird7.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="2.4 PIMPLE算法 | 2.5 附加显式力的压力速度耦合 | CloudBird&#39;s Idea Space - Atom Feed" href="https://cloudbird7.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://cloudbird7.github.io">
-  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597478147021" alt="">
+  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597483492278" alt="">
   </a>
   <h1 class="site-title">
     CloudBird&#39;s Idea Space
@@ -316,7 +316,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 <p>PIMPLE算法非常类似于瞬态版本的SIMPLE算法，有兴趣的读者可以按照2.2节的指引阅读相关文献。简单来说，PIMPLE算法在PISO算法的基础上在外层添加了一个类似SIMPLE算法的外循环进行动量方程的重建。每进行一次动量方程的更新，都会将原本滞后的通量进行更新，因此PIMPLE算法能够较好地处理大时间步长下的瞬态计算。其算法框图如下;</p>
 <ul>
 <li><strong>图2.3 PIMPLE算法框图</strong><br>
-<img src="https://img-blog.csdnimg.cn/20200804212438574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图2.2 PIMPLE算法框图" loading="lazy"></li>
+<img src="https://img-blog.csdnimg.cn/20200804212438574.png" alt="图2.2 PIMPLE算法框图" loading="lazy"></li>
 </ul>
 <p>PIMPLE算法是PISO和SIMPLE算法的结合体，由于之前在SIMPLE和PISO算法的介绍中已经对代码进行了较为详细的解读，因此在这里就不详细进行介绍了。PIMPLE算法中的设置主要在fvsolution字典中的PIMPLE子字典中进行，其需要设置的项为PISO和SIMPLE算法中所有要设置项的集合，读者可以参考前面的章节。</p>
 <p>PIMPLE算法没有原始文献可以参考，但文献<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>对PISO算法和SIMPLE算法进行了较为详细的对比分析，对于理解PIMPLE算法很有帮助，感兴趣的读者可以阅读。</p>

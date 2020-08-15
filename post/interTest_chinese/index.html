@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>interFoam进行两相流模拟的一些典型参数设置对比&amp;paraview绘制相界面的方法 | CloudBird&#39;s Idea Space</title>
+<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597483492278">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cloudbird7.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="interFoam进行两相流模拟的一些典型参数设置对比&amp;paraview绘制相界面的方法 | CloudBird&#39;s Idea Space - Atom Feed" href="https://cloudbird7.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1 背景
+我的个人课题是基于interFoam的一些二次开发,然而我在使用自己的求解器进行模拟的时候往往会因为模拟参数配置的不合适导致这样或那样的一些问题。这些问题本质上是自己对interFoam进行模拟时的一些关键参数不太了解导致的。前几..." />
+    <meta name="keywords" content="OpenFOAM使用笔记,中文博文" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://cloudbird7.github.io">
+  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597483492278" alt="">
+  </a>
+  <h1 class="site-title">
+    CloudBird&#39;s Idea Space
+  </h1>
+  <p class="site-description">
+    CloudBird 的驿站  |  CloudBird's blog
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页 HOME
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          文章 Articles
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          分类 Tags
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于 About
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/cloudbird7" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              interFoam进行两相流模拟的一些典型参数设置对比&amp;paraview绘制相界面的方法
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-05-29
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://cloudbird7.github.io/tag/usingNote/" class="post-tag">
+                  # OpenFOAM使用笔记
+                </a>
+              
+                <a href="https://cloudbird7.github.io/tag/chineseBlog/" class="post-tag">
+                  # 中文博文
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://img-blog.csdnimg.cn/20200529165324573.gif" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="1-背景">1 背景</h2>
+<p>我的个人课题是基于interFoam的一些二次开发,然而我在使用自己的求解器进行模拟的时候往往会因为模拟参数配置的不合适导致这样或那样的一些问题。这些问题本质上是自己对interFoam进行模拟时的一些关键参数不太了解导致的。前几天看到一本资料上关于interFOAM的讲解，其中的拓展练习中包括一些不同模拟参数的对比，借此机会我就使用溃坝算例对一些典型参数对模拟的影响进行了实际的试算分析,也将之前积累的一些心得一同分享出来。</p>
+<h2 id="2-算例">2 算例</h2>
+<p>二维溃坝算例，来自OpenFOAM7的自带的教程。将模拟参数延长为2s而已。</p>
+<h2 id="3-参数对比">3 参数对比</h2>
+<h3 id="31-压力边界条件">3.1 压力边界条件？</h3>
+<p>固壁处的压力边界条件最常用的是零梯度边界条件，但是当求解器中植入了额外的体积力时（比如两相的表面张力和重力），零梯度边界条件会造成边界处的通量不守恒。OpenFOAM官方手册对fixedFluxPressure是这么描述的：</p>
+<blockquote>
+<p>&quot;At all wall boundaries, the fixedFluxPressure boundary condition is applied to the pressure field, which adjusts the pressure gradient so that the boundary flux matches the velocity boundary condition for solvers that include body forces such as gravity and surface tension.&quot;   Manual 2.3.2节</p>
+</blockquote>
+<blockquote>
+<p>&quot;In the above example, it can be seen that all the wall boundaries use a boundary condition named fixedFluxPressure. <strong>This boundary condition is used for pressure in situations where zeroGradient is generally used, but where body forces such as gravity and surface tension are present in the solution equations.</strong> The condition adjusts the gradient accordingly.&quot; Manual 5.2.3节</p>
+</blockquote>
+<p>在溃坝算例中，如果我们把fixedFluxPressure边界条件改为零梯度边界条件，那么其会直接由于初始通量不守恒无法开始运算，求解器会要求你使用potentialFoam对速度场进行初始化。然而由于溃坝算例没有进口类和出口类边界条件，因此其实质上无法进行初始化。对于有进口类和出口类边界条件（轴对称和周期性边界条件也算）的算例，此时使用零梯度边界条件是可以进行计算的，但是会造成较大的误差，在壁面附近可以观察到比较明显的误差区域。</p>
+<h3 id="32-相分数对流项的离散格式">3.2 相分数对流项的离散格式？</h3>
+<p>在默认的算例中，我们的想分数默认离散格式为：</p>
+<pre><code class="language-cpp">    div(phi,alpha)  Gauss vanLeer;
+    div(phirb,alpha) Gauss linear;
+</code></pre>
+<p>vanLeer是具有TVD性质的离散格式，一般来说其可以在解变化比较尖锐的区域也有较好的求解精度。在这里我们可以将其替换为一阶迎风格式，两个格式的计算结果对比如下：<br>
+<img src="https://img-blog.csdnimg.cn/20200529160043409.gif#pic_center" alt="upwind格式和vanLeer格式的模拟结果对比" loading="lazy">upwind格式最大的缺点是其数值扩散过强，这点在结果中也有所体现：右侧图片中相界面外侧低相分数区域的尺寸upwinde格式要更大一些（动图看不清楚的同学可以自己模拟后一帧一帧对比看看）。</p>
+<h3 id="33-界面压缩因子">3.3 界面压缩因子？</h3>
+<p>界面压缩因子用来设置interFoam相分数方程中人工对流项的强度（详见<a href="http://www.dyfluid.com/interFoam.html">李东岳老师的interFoam解析</a>）。如果界面压缩因子c设为1则表示人工对流项完全起作用，对界面进行法向压缩。如果界面压缩因子c设为0，则表示界面压缩的人工对流项完全不起作用。在这里我们分别测试了c=0和c=1的两种情况：<br>
+<img src="https://img-blog.csdnimg.cn/20200529161347999.gif#pic_center" alt="界面压缩因子对模拟结果的影响" loading="lazy">可以看到，人工对流项不存在的时候界面附加出现了严重的数值扩散，界面变得非常“厚”。在坝体右侧区域甚至出现了相分数完全处于0与1之间的情况。</p>
+<h3 id="33-动量预测非正交循环">3.3 动量预测，非正交循环？</h3>
+<p>OpenFOAM手册中对动量预测开关的建议是多相流情况时关闭，溃坝算例中的默认设置也默认是关闭的。从个人理解来看，动量预测可以提高求解的稳定性，但是会增加计算资源的消耗。</p>
+<p>手册对于非正交循环次数究竟应该设置为多少则比较暧昧。按照手册的说法，非正交循环是为了校正在压力泊松方程中由于网格非正交引起的面法向梯度计算误差,但其校正的原理究竟是什么我暂时不清楚。根据对代码的分析和实际测试表明，计算中一个时间步内总的压力修正方程求解次数等于设置的(非正交循环次数+1)×设置的压力泊松方程求解次数(nCorrectors)，所谓非正交循环只是重复求解了一次压力泊松方程而已，这样的重复求解究竟如何实现非正交项的修正呢？另外，手册上建议在瞬态时将非正交修正次数设为1，稳态时将非正交修正次数设为0，但溃坝的瞬态算例却依然将非正交修正次数设置为0，这又是矛盾的。</p>
+<p>根据我们的结果很难说明动量预测方程和非正交循环次数究竟应该设置为多少，或许各位读者可以使用其他比较好定量分析的算例对这个问题进行探究。根据我的经验，开启动量预测和增加非正交修正次数可以增强计算是稳定性（有时如果不开启非正交修正会导致计算误差累累积而导致错误结果），如果计算资源允许，可以开启这两个选项。<br>
+<img src="https://img-blog.csdnimg.cn/20200529165324573.gif" alt="动量预测方程对结果的影响" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200529165324226.gif" alt="非正交循环次数对结果的影响 " loading="lazy"></p>
+<h2 id="4-paraview后处理分析">4 paraView后处理分析</h2>
+<p>本文在制作上面的动图时用到了paraview中的几个技巧：<br>
+<strong>绘制界面：</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200529171231435.png" alt="显示相分数等于0.5的界面" loading="lazy">在二维的情况下，需要将counter滤镜的显示方式设置为Wireframe才可以与云图叠加显示。另外，还可以使用Threshold滤镜显示所有包含液体的区域：<br>
+<img src="https://img-blog.csdnimg.cn/20200529171326932.png" alt="显示包含液体的区域" loading="lazy"> **</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E8%83%8C%E6%99%AF">1 背景</a></li>
+<li><a href="#2-%E7%AE%97%E4%BE%8B">2 算例</a></li>
+<li><a href="#3-%E5%8F%82%E6%95%B0%E5%AF%B9%E6%AF%94">3 参数对比</a>
+<ul>
+<li><a href="#31-%E5%8E%8B%E5%8A%9B%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6">3.1 压力边界条件？</a></li>
+<li><a href="#32-%E7%9B%B8%E5%88%86%E6%95%B0%E5%AF%B9%E6%B5%81%E9%A1%B9%E7%9A%84%E7%A6%BB%E6%95%A3%E6%A0%BC%E5%BC%8F">3.2 相分数对流项的离散格式？</a></li>
+<li><a href="#33-%E7%95%8C%E9%9D%A2%E5%8E%8B%E7%BC%A9%E5%9B%A0%E5%AD%90">3.3 界面压缩因子？</a></li>
+<li><a href="#33-%E5%8A%A8%E9%87%8F%E9%A2%84%E6%B5%8B%E9%9D%9E%E6%AD%A3%E4%BA%A4%E5%BE%AA%E7%8E%AF">3.3 动量预测，非正交循环？</a></li>
+</ul>
+</li>
+<li><a href="#4-paraview%E5%90%8E%E5%A4%84%E7%90%86%E5%88%86%E6%9E%90">4 paraView后处理分析</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://cloudbird7.github.io/post/manual_decom_chinese/">
+              <h3 class="post-title">
+                简单自编程实现手动划分OpenFOAM并行分区（以manual方式进行划分）
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  CloudBird</a> |邮件地址:cloudbird7@foxmail.com|CSDN同步博客:<a href="https://blog.csdn.net/CloudBird07" target="_blank">CloudBird07</a>
+  <a class="rss" href="https://cloudbird7.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

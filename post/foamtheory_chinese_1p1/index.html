@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>1.1 计算域的空间离散 | CloudBird&#39;s Idea Space</title>
-<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597478147021">
+<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597483492278">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cloudbird7.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="1.1 计算域的空间离散 | CloudBird&#39;s Idea Space - Atom Feed" href="https://cloudbird7.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://cloudbird7.github.io">
-  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597478147021" alt="">
+  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597483492278" alt="">
   </a>
   <h1 class="site-title">
     CloudBird&#39;s Idea Space
@@ -109,12 +109,12 @@
 <p>认识有限体积法，我们先从认识有限体积入手。相比有限体积这个说法，更多的人可能更熟悉“网格”这个词。在一张白纸上画几道横线，再画几道竖线，你就能得到一个最简单的网格系统。在你的第一印象里，也许有横线和竖线构成的一个小四方块就是一个网格单元，也就是我们说的一个有限体积（即控制体，之后均采用控制体一词）。然而事实并非如此。</p>
 <ul>
 <li><strong>图1.1 一个二维网格系统<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></strong><br>
-<img src="https://img-blog.csdnimg.cn/2020070721240585.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图1.1 一个二维网格系统" loading="lazy"></li>
+<img src="https://img-blog.csdnimg.cn/2020070721240585.png" alt="图1.1 一个二维网格系统" loading="lazy"></li>
 </ul>
 <p>图1.1是一个典型的二维网格系统，与你自己刚刚在白纸上手画的几横几竖的网格系统非常像。在这里，一个控制体并不是横线与竖线围成的一个小方块，而是以一个节点为中心，拥有特定长度和宽度的小方块。图中P点是一个控制体的中心点，其宽度为△x，高度为△y，四面分别为w、e、s、n，其相邻网格的节点为W、E、S、N。在这里W、E、S、N和其小写字母分别对应着东西南北的英文单词首字母。有时候，为了统一描述，我们也会用大写字母N（即邻居，Neighbor）表示一个控制体周围的其他控制体，这样的表示方法在CFD教材中是通用的。一般而言，控制体的形状不一定非要是正方形（对应于三维中的正六面体），只要满足<strong>控制体之间彼此不重叠，充满整个计算区域</strong>的条件即可。图1.2<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>是一个典型的三维控制体，其具有复杂的几何形状。</p>
 <ul>
 <li><strong>图1.2 一个三维控制体<sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2:1]</a></sup></strong><br>
-<img src="https://img-blog.csdnimg.cn/20200707212556259.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图1.1 一个三维控制体" loading="lazy"></li>
+<img src="https://img-blog.csdnimg.cn/20200707212556259.png" alt="图1.1 一个三维控制体" loading="lazy"></li>
 </ul>
 <p>在有限体积法中，所有物理量存储在控制体中心点P上，所谓中心点，即满足以下关系的点：</p>
 <p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable side="right"><mlabeledtr><mtd><mtext>(1.1)</mtext></mtd><mtd><mrow><msub><mo>∫</mo><msub><mi>V</mi><mi>P</mi></msub></msub><mo>(</mo><mover accent="true"><mi>x</mi><mo>⃗</mo></mover><mo>−</mo><mover accent="true"><msub><mi>x</mi><mi>P</mi></msub><mo>⃗</mo></mover><mo>)</mo><mi>d</mi><mi>V</mi><mo>=</mo><mn>0</mn></mrow></mtd></mlabeledtr></mtable><annotation encoding="application/x-tex">\int_{V_P}(\vec x-\vec {x_P})dV=0 \tag{1.1}
@@ -266,6 +266,15 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://cloudbird7.github.io/post/interTest_chinese/">
+              <h3 class="post-title">
+                interFoam进行两相流模拟的一些典型参数设置对比&amp;paraview绘制相界面的方法
+              </h3>
+            </a>
+          </div>
         
 
         

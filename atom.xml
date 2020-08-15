@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cloudbird7.github.io</id>
     <title>CloudBird&apos;s Idea Space</title>
-    <updated>2020-08-15T07:56:33.676Z</updated>
+    <updated>2020-08-15T09:24:56.159Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://cloudbird7.github.io"/>
     <link rel="self" href="https://cloudbird7.github.io/atom.xml"/>
@@ -65,5 +65,19 @@
         <link href="https://cloudbird7.github.io/post/foamtheory_chinese_1p1/">
         </link>
         <updated>2020-07-08T04:57:35.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[interFoam进行两相流模拟的一些典型参数设置对比&paraview绘制相界面的方法]]></title>
+        <id>https://cloudbird7.github.io/post/interTest_chinese/</id>
+        <link href="https://cloudbird7.github.io/post/interTest_chinese/">
+        </link>
+        <updated>2020-05-29T09:19:29.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[简单自编程实现手动划分OpenFOAM并行分区（以manual方式进行划分）]]></title>
+        <id>https://cloudbird7.github.io/post/manual_decom_chinese/</id>
+        <link href="https://cloudbird7.github.io/post/manual_decom_chinese/">
+        </link>
+        <updated>2020-05-26T09:10:51.000Z</updated>
     </entry>
 </feed>
