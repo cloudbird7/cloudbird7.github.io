@@ -1,0 +1,290 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1.2.2 通用的标量输运方程|1.2.3 控制方程的分类 | CloudBird&#39;s Idea Space</title>
+<link rel="shortcut icon" href="https://cloudbird7.github.io/favicon.ico?v=1597478147021">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cloudbird7.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="1.2.2 通用的标量输运方程|1.2.3 控制方程的分类 | CloudBird&#39;s Idea Space - Atom Feed" href="https://cloudbird7.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="1.2.2 通用的标量输运方程
+1.2.1节涉及的动量方程和能量方程都可以整理为如下的标准的标量输运方程：
+(1.16)∂(ρϕ)∂t+∇⋅(ρϕu⃗)=∇⋅(Γ∇ϕ)+Sϕ\frac{\partial(\rho\phi)}{\partia..." />
+    <meta name="keywords" content="中文博文,OpenFOAM理论笔记" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://cloudbird7.github.io">
+  <img class="avatar" src="https://cloudbird7.github.io/images/avatar.png?v=1597478147021" alt="">
+  </a>
+  <h1 class="site-title">
+    CloudBird&#39;s Idea Space
+  </h1>
+  <p class="site-description">
+    CloudBird 的驿站  |  CloudBird's blog
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页 HOME
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          文章 Articles
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          分类 Tags
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于 About
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/cloudbird7" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              1.2.2 通用的标量输运方程|1.2.3 控制方程的分类
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-07-19
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://cloudbird7.github.io/tag/chineseBlog/" class="post-tag">
+                  # 中文博文
+                </a>
+              
+                <a href="https://cloudbird7.github.io/tag/OpenFOAMtheory_chinese/" class="post-tag">
+                  # OpenFOAM理论笔记
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://cloudbird7.github.io/post-images/foamtheory_chinese_1p3.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="122-通用的标量输运方程">1.2.2 通用的标量输运方程</h3>
+<p>1.2.1节涉及的动量方程和能量方程都可以整理为如下的标准的标量输运方程：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable side="right"><mlabeledtr><mtd><mtext>(1.16)</mtext></mtd><mtd><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mo>(</mo><mi>ρ</mi><mi>ϕ</mi><mo>)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><mi>t</mi></mrow></mfrac><mo>+</mo><mi mathvariant="normal">∇</mi><mo>⋅</mo><mo>(</mo><mi>ρ</mi><mi>ϕ</mi><mover accent="true"><mi>u</mi><mo>⃗</mo></mover><mo>)</mo><mo>=</mo><mi mathvariant="normal">∇</mi><mo>⋅</mo><mo>(</mo><mi mathvariant="normal">Γ</mi><mi mathvariant="normal">∇</mi><mi>ϕ</mi><mo>)</mo><mo>+</mo><msub><mi>S</mi><mi>ϕ</mi></msub></mrow></mtd></mlabeledtr></mtable><annotation encoding="application/x-tex">\frac{\partial(\rho\phi)}{\partial t}+\nabla\cdot(\rho\phi\vec u)=\nabla\cdot(\Gamma\nabla\phi)+S_\phi
+\tag{1.16}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mopen">(</span><span class="mord mathdefault">ρ</span><span class="mord mathdefault">ϕ</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">ρ</span><span class="mord mathdefault">ϕ</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault">u</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.20772em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">Γ</span><span class="mord">∇</span><span class="mord mathdefault">ϕ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">ϕ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span><span class="tag"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord text"><span class="mord">(</span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">1</span><span class="mord">6</span></span><span class="mord">)</span></span></span></span></span></span></p>
+<p>式(1.16)从左至右依次是表示控制体内标量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi></mrow><annotation encoding="application/x-tex">\phi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">ϕ</span></span></span></span>净增加率的瞬态项<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mo>(</mo><mi>ρ</mi><mi>ϕ</mi><mo>)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><mi>t</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial(\rho\phi)}{\partial t}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.355em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight" style="margin-right:0.05556em;">∂</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">ρ</span><span class="mord mathdefault mtight">ϕ</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi></mrow><annotation encoding="application/x-tex">\phi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">ϕ</span></span></span></span>随流体流出的净流出率的对流项<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∇</mi><mo>⋅</mo><mo>(</mo><mi>ρ</mi><mi>ϕ</mi><mover accent="true"><mi>u</mi><mo>⃗</mo></mover><mo>)</mo></mrow><annotation encoding="application/x-tex">\nabla\cdot(\rho\phi\vec u)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">ρ</span><span class="mord mathdefault">ϕ</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault">u</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.20772em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，表示由于扩散作用扩散至控制体内的净扩散率的扩散项<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∇</mi><mo>⋅</mo><mo>(</mo><mi mathvariant="normal">Γ</mi><mi mathvariant="normal">∇</mi><mi>ϕ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\nabla\cdot(\Gamma\nabla\phi)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">Γ</span><span class="mord">∇</span><span class="mord mathdefault">ϕ</span><span class="mclose">)</span></span></span></span>以及表示其他作用的源项<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mi>ϕ</mi></msub></mrow><annotation encoding="application/x-tex">S_\phi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">ϕ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>。<br>
+式(1.16)又可称为含源的瞬态的对流扩散方程，其是一类描述标量输运的最普遍的方程，对于一个矢量(如速度)，其在各个方向上的分量也可以使用该方程进行描述。在有限体积法中，对于各式各样复杂物理场控制方程的求解都可以在最终转化为对相应对流扩散方程的求解。甚至可以这么说，一套优秀的有限体积法程序就是一个优秀的对流扩散方程求解程序。</p>
+<h3 id="123-控制方程的分类">1.2.3 控制方程的分类</h3>
+<p>上一节中我们介绍了通用的标量输运方程，我们也指出绝大多数的控制方程最终都可以整理为标量输运方程的形式。虽然其可以整理为相同的形式，但各个控制方程之间却可能存在着不同的数学特征。通常，我们依据偏微分方程的数学特征可以对控制方程进行如下的分类：</p>
+<p><strong>椭圆方程：</strong><br>
+椭圆方程的原型是稳态的扩散方程：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable side="right"><mlabeledtr><mtd><mtext>(1.17)</mtext></mtd><mtd><mrow><mi mathvariant="normal">∇</mi><mo>⋅</mo><mo>(</mo><mi mathvariant="normal">Γ</mi><mi mathvariant="normal">∇</mi><mi>ϕ</mi><mo>)</mo><mo>=</mo><mn>0</mn></mrow></mtd></mlabeledtr></mtable><annotation encoding="application/x-tex">\nabla\cdot(\Gamma\nabla\phi)=0
+\tag{1.17}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">Γ</span><span class="mord">∇</span><span class="mord mathdefault">ϕ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span><span class="tag"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">(</span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">1</span><span class="mord">7</span></span><span class="mord">)</span></span></span></span></span></span></p>
+<p>由于式(1.17)在二维情况下可以看做一个椭圆的方程，因此得名为椭圆方程。在实际的物理现象中，固体中的稳态温度分布以及固体在给定载荷下的应力分布都是由椭圆方程控制的。</p>
+<p>椭圆方程的一个重要特点是计算域内部一点的扰动会在整个计算域内引起变化，扰动将从扰动源出发传遍整个计算域（例如向一根小铁根中心突然进行加热，温度的变化会传播到整个小铁棍上）。因此，用椭圆方程描述的问题的解总是光滑的，即使边界条件是不连续的，其解也是光滑的。这对于数值计算来说是一个相当大的好消息——处理光滑问题总比处理间断问题容易得多。但需要注意的是，为了保证扰动可以向各个方向传播，求解椭圆问题的数值技术必须保证每个计算点的数据受到所有相邻点的影响。</p>
+<p><strong>抛物型方程</strong><br>
+抛物型方程的原型是瞬态的扩散方程：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable side="right"><mlabeledtr><mtd><mtext>(1.18)</mtext></mtd><mtd><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>ϕ</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi mathvariant="normal">∇</mi><mo>⋅</mo><mo>(</mo><mi mathvariant="normal">Γ</mi><mi mathvariant="normal">∇</mi><mi>ϕ</mi><mo>)</mo></mrow></mtd></mlabeledtr></mtable><annotation encoding="application/x-tex">\frac{\partial \phi}{\partial t}=\nabla\cdot(\Gamma\nabla\phi)
+\tag{1.18}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0574399999999997em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault">ϕ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">∇</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">Γ</span><span class="mord">∇</span><span class="mord mathdefault">ϕ</span><span class="mclose">)</span></span><span class="tag"><span class="strut" style="height:2.0574399999999997em;vertical-align:-0.686em;"></span><span class="mord text"><span class="mord">(</span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">1</span><span class="mord">8</span></span><span class="mord">)</span></span></span></span></span></span></p>
+<p>由抛物型方程控制的一个典型的物理问题是非稳态的温度传导问题例如将一根烧红的铁棍置于空气中进行冷却。该类问题的特点是，在t时刻发生的扰动只能影响到t时间步以后的物理量分布,解在时间上向前移动，在空间中则保持扩散。扩散效应的出现，保证了即使初始条件包含不连续点，解也能够在t&gt;0后保持平滑。当t足够大时系统变为稳态，方程退化为椭圆方程。</p>
+<p><strong>双曲型方程</strong><br>
+双曲型方程的原型是波动方程：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable side="right"><mlabeledtr><mtd><mtext>(1.19)</mtext></mtd><mtd><mrow><mfrac><mrow><msup><mi mathvariant="normal">∂</mi><mn>2</mn></msup><mi>ϕ</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup><msup><mi mathvariant="normal">∇</mi><mn>2</mn></msup><mi>ϕ</mi></mrow></mtd></mlabeledtr></mtable><annotation encoding="application/x-tex">\frac{\partial^2 \phi}{\partial t^2}=c^2\nabla^2\phi
+\tag{1.19}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathdefault">ϕ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0585479999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathdefault">ϕ</span></span><span class="tag"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord text"><span class="mord">(</span><span class="mord"><span class="mord">1</span><span class="mord">.</span><span class="mord">1</span><span class="mord">9</span></span><span class="mord">)</span></span></span></span></span></span></p>
+<p>式1.19的解是一个标准的正弦波系统。双曲型方程的一个重要特点是扰动的有限传播性，例如，对于一维的波动方程，位于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo separator="true">,</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(x,t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mclose">)</span></span></span></span>处的值只受到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>c</mi><mi>t</mi><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(x-ct,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mi>c</mi><mi>t</mi><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(x+ct,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span>之间值的影响。这一特性也决定了双曲方程的解不一定是光滑连续的。</p>
+<ul>
+<li>
+<p><strong>图1.3 双曲方程的有限传播特性<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></strong><br>
+<img src="https://img-blog.csdnimg.cn/20200719200453313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图1.3 双曲方程的有限传播特性" loading="lazy">此时我们不妨回顾一下椭圆型方程和抛物型方程的特点，对于椭圆型方程，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>处的值受到周围所有点的影响；对于抛物型方程，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo separator="true">,</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(x,t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mclose">)</span></span></span></span>处的值受到当前时间步之前所有点的影响，而对于双曲型方程，一个点的值则由时间上游的一部分点决定，这个点同时又将影响时间下游一部分的点。这是他们之间的重要区别。</p>
+</li>
+<li>
+<p><strong>图1.4 三类方程的区别<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>（a. 椭圆方程 b. 抛物型方程 c. 双曲型方程）</strong><br>
+<img src="https://img-blog.csdnimg.cn/20200719200538239.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nsb3VkQmlyZDA3,size_16,color_FFFFFF,t_70#pic_center" alt="图1.4 三类方程的区别（a. 椭圆方程 b. 抛物型方程 c. 双曲型方程）&quot;)" loading="lazy">一般而言，对于流动的控制方程动量方程，我们可以进行如下的大致分类：</p>
+</li>
+<li>
+<p><strong>表1.1 动量方程的分类<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">稳态流动</th>
+<th style="text-align:center">瞬态流动</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">无粘流动</td>
+<td style="text-align:center">椭圆型</td>
+<td style="text-align:center">抛物型</td>
+</tr>
+<tr>
+<td style="text-align:center">粘性流动</td>
+<td style="text-align:center"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mi>a</mi><mo>&lt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">Ma&lt;1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>时椭圆型 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mi>a</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">Ma&gt;1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>时双曲型</td>
+<td style="text-align:center">双曲型</td>
+</tr>
+<tr>
+<td style="text-align:center">薄剪切层流动</td>
+<td style="text-align:center">抛物型</td>
+<td style="text-align:center">抛物型</td>
+</tr>
+</tbody>
+</table>
+<p>关于偏微分方程分类的更详细内容可以参考相关文献<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>。</p>
+<blockquote>
+<p>系列说明：<br>
+接触有限体积法有一段时间了，也看了一些资料，但是有时候总觉得看过一遍之后什么也记不住。老话说得好，眼过千遍不如手过一遍，久而久之我就有了写一些比较像样子的笔记的想法。初学的时候曾经写过一本叫“OpenFOAM编程笔记：单相不可压缩流动”的册子，但当时基础太差（现在基础也不好），错误太多，倒不如推倒重来。<br>
+本系列将持续更新，欢迎各位挑错交流，挑错交流可以直接留言也可以联系邮箱cloudbird7@foxmail.com。等到预定内容全部写完后我将集结所有内容为一个独立的文件，开放下载。</p>
+</blockquote>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Versteeg H K ,  Malalasekera W . An Introduction to Computational Fluid Dynamic: The Finite Volume Method Second edition [M]. Edinburgh Gate：Pearson Education, 2007. Figure 2.9. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Versteeg H K ,  Malalasekera W . An Introduction to Computational Fluid Dynamic: The Finite Volume Method Second edition [M]. Edinburgh Gate：Pearson Education, 2007. Figure 2.10. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Versteeg H K ,  Malalasekera W . An Introduction to Computational Fluid Dynamic: The Finite Volume Method Second edition [M]. Edinburgh Gate：Pearson Education, 2007. Table 2.4. <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>Versteeg H K ,  Malalasekera W . An Introduction to Computational Fluid Dynamic: The Finite Volume Method Second edition [M]. Edinburgh Gate：Pearson Education, 2007. 26-34. <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#122-%E9%80%9A%E7%94%A8%E7%9A%84%E6%A0%87%E9%87%8F%E8%BE%93%E8%BF%90%E6%96%B9%E7%A8%8B">1.2.2 通用的标量输运方程</a></li>
+<li><a href="#123-%E6%8E%A7%E5%88%B6%E6%96%B9%E7%A8%8B%E7%9A%84%E5%88%86%E7%B1%BB">1.2.3 控制方程的分类</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://cloudbird7.github.io/post/foamtheory_chinese_1p2/">
+              <h3 class="post-title">
+                1.2.1流动与传热的通用控制方程
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  CloudBird</a> |邮件地址:cloudbird7@foxmail.com|CSDN同步博客:<a href="https://blog.csdn.net/CloudBird07" target="_blank">CloudBird07</a>
+  <a class="rss" href="https://cloudbird7.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
